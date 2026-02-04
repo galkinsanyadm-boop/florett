@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ViewState, Bouquet, Category } from './types';
+import { bouquets } from './data';
 import { Header, Footer } from './components/UI';
 import { Hero } from './components/Hero';
 import { Catalog } from './components/Catalog';
@@ -16,22 +17,6 @@ const App: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category>('all');
   const [selectedBouquet, setSelectedBouquet] = useState<Bouquet | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [bouquets, setBouquets] = useState<Bouquet[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Fetch bouquets from API
-  useEffect(() => {
-    fetch('/api/bouquets?active=true')
-      .then(res => res.json())
-      .then(data => {
-        setBouquets(data);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching bouquets:', err);
-        setIsLoading(false);
-      });
-  }, []);
 
   // Scroll to top when view changes
   useEffect(() => {
@@ -70,7 +55,6 @@ const App: React.FC = () => {
                 selectedCategory={selectedCategory}
                 onCategoryChange={setSelectedCategory}
                 onBouquetClick={setSelectedBouquet}
-                isLoading={isLoading}
               />
             </motion.div>
           )}

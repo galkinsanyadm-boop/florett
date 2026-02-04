@@ -50,39 +50,21 @@ export const CartPanel: React.FC<CartPanelProps> = ({ isOpen, onClose }) => {
     setIsSubmitting(true);
     setError('');
 
-    try {
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...form,
-          items: items.map(item => ({
-            bouquetId: item.bouquetId,
-            quantity: item.quantity
-          }))
-        })
-      });
+    // Демо-режим: имитируем отправку заказа
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-      if (!response.ok) {
-        throw new Error('Ошибка при оформлении заказа');
-      }
-
-      setOrderSuccess(true);
-      clearCart();
-      setForm({
-        customerName: '',
-        customerPhone: '',
-        customerEmail: '',
-        deliveryAddress: '',
-        deliveryDate: '',
-        deliveryTime: '',
-        comment: ''
-      });
-    } catch (err) {
-      setError('Не удалось оформить заказ. Попробуйте позже.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    setOrderSuccess(true);
+    clearCart();
+    setForm({
+      customerName: '',
+      customerPhone: '',
+      customerEmail: '',
+      deliveryAddress: '',
+      deliveryDate: '',
+      deliveryTime: '',
+      comment: ''
+    });
+    setIsSubmitting(false);
   };
 
   const handleClose = () => {

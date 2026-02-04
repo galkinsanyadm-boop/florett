@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Review } from '../types';
+import { reviews } from '../data';
 import { Star, Quote, MessageCircle } from 'lucide-react';
 import { Button } from './UI';
 
@@ -21,22 +21,6 @@ const itemVariants = {
 };
 
 export const Reviews: React.FC = () => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/reviews?approved=true')
-      .then(res => res.json())
-      .then(data => {
-        setReviews(data);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching reviews:', err);
-        setIsLoading(false);
-      });
-  }, []);
-
   return (
     <section className="bg-bg min-h-screen pt-32 pb-20 px-6">
       <div className="max-w-6xl mx-auto">
@@ -60,66 +44,59 @@ export const Reviews: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Loading State */}
-        {isLoading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="w-12 h-12 border-4 border-mocha/20 border-t-mocha rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          /* Masonry Grid Layout using CSS Columns */
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8"
-          >
-            {reviews.map((review) => (
-              <motion.div
-                key={review.id}
-                variants={itemVariants}
-                className={`break-inside-avoid relative p-8 rounded-[32px] transition-all duration-300 hover:shadow-float group ${
-                  review.highlight
-                    ? 'bg-gradient-to-br from-white to-blush/20 border-2 border-white'
-                    : 'bg-white shadow-soft'
+        {/* Masonry Grid Layout using CSS Columns */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8"
+        >
+          {reviews.map((review) => (
+            <motion.div
+              key={review.id}
+              variants={itemVariants}
+              className={`break-inside-avoid relative p-8 rounded-[32px] transition-all duration-300 hover:shadow-float group ${
+                review.highlight
+                  ? 'bg-gradient-to-br from-white to-blush/20 border-2 border-white'
+                  : 'bg-white shadow-soft'
+              }`}
+            >
+              <Quote
+                size={40}
+                className={`absolute top-6 right-6 opacity-20 rotate-12 transition-transform duration-500 group-hover:rotate-0 ${
+                  review.highlight ? 'text-mocha' : 'text-sage-dark'
                 }`}
-              >
-                <Quote
-                  size={40}
-                  className={`absolute top-6 right-6 opacity-20 rotate-12 transition-transform duration-500 group-hover:rotate-0 ${
-                    review.highlight ? 'text-mocha' : 'text-sage-dark'
-                  }`}
-                />
+              />
 
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={16}
-                      className={`${i < review.rating ? 'fill-mocha text-mocha' : 'text-gray-300'} transition-all duration-300 group-hover:scale-110`}
-                      style={{ transitionDelay: `${i * 50}ms` }}
-                    />
-                  ))}
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    size={16}
+                    className={`${i < review.rating ? 'fill-mocha text-mocha' : 'text-gray-300'} transition-all duration-300 group-hover:scale-110`}
+                    style={{ transitionDelay: `${i * 50}ms` }}
+                  />
+                ))}
+              </div>
+
+              <p className="text-text-main font-body text-lg leading-relaxed mb-6 relative z-10">
+                {review.text}
+              </p>
+
+              <div className="flex justify-between items-center border-t border-gray-100 pt-4">
+                <div>
+                  <h4 className="font-heading font-bold text-lg text-text-main">{review.author}</h4>
+                  <span className="text-xs text-text-muted font-medium uppercase tracking-wide">{review.date}</span>
                 </div>
-
-                <p className="text-text-main font-body text-lg leading-relaxed mb-6 relative z-10">
-                  {review.text}
-                </p>
-
-                <div className="flex justify-between items-center border-t border-gray-100 pt-4">
-                  <div>
-                    <h4 className="font-heading font-bold text-lg text-text-main">{review.author}</h4>
-                    <span className="text-xs text-text-muted font-medium uppercase tracking-wide">{review.date}</span>
-                  </div>
-                  {review.highlight && (
-                     <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
-                        <HeartIcon />
-                     </div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+                {review.highlight && (
+                   <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+                      <HeartIcon />
+                   </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
 
         {/* Call to Action */}
         <motion.div
@@ -141,7 +118,7 @@ export const Reviews: React.FC = () => {
                Нам очень важно знать, что вы думаете. Напишите нам в Telegram, и мы с радостью опубликуем ваш отзыв.
              </p>
              <Button
-                onClick={() => window.open('https://t.me/florett_flowers', '_blank')}
+                onClick={() => alert('Это демо-сайт. В реальном магазине здесь была бы ссылка на Telegram.')}
                 className="gap-2 pl-6 pr-8 shadow-xl shadow-mocha/10"
              >
                 <MessageCircle size={20} />
