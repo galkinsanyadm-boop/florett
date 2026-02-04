@@ -1,0 +1,24 @@
+{
+  "name": "florett",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npm run dev:all",
+    "dev:client": "npm run dev -w @florett/client",
+    "dev:admin": "npm run dev -w @florett/admin",
+    "dev:server": "npm run dev -w @florett/server",
+    "dev:all": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "npm run build -w @florett/client && npm run build -w @florett/admin",
+    "db:migrate": "npm run db:migrate -w @florett/server",
+    "db:seed": "npm run db:seed -w @florett/server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

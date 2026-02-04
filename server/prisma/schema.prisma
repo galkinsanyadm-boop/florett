@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./florett.db"
+}
+
+model Bouquet {
+  id          String   @id @default(uuid())
+  name        String
+  price       Int
+  category    String
+  description String
+  composition String   // JSON array
+  images      String   // JSON array
+  size        String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems OrderItem[]
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  author     String
+  text       String
+  rating     Int
+  date       String
+  highlight  Boolean  @default(false)
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Order {
+  id              String   @id @default(uuid())
+  customerName    String
+  customerPhone   String
+  customerEmail   String?
+  deliveryAddress String
+  deliveryDate    String
+  deliveryTime    String
+  comment         String?
+  status          String   @default("new")
+  totalPrice      Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  items OrderItem[]
+}
+
+model OrderItem {
+  id           String  @id @default(uuid())
+  orderId      String
+  bouquetId    String
+  quantity     Int
+  priceAtOrder Int
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  bouquet Bouquet @relation(fields: [bouquetId], references: [id])
+
+  @@index([orderId])
+  @@index([bouquetId])
+}

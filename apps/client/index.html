@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Florett — Цветы для души</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ['"Nunito"', 'sans-serif'],
+              body: ['"Quicksand"', 'sans-serif'],
+              display: ['"Cormorant Garamond"', 'serif'],
+            },
+            colors: {
+              bg: '#FDFCF8', // Warm off-white base
+              lavender: {
+                DEFAULT: '#E3DFF2',
+                dark: '#C8C2E0',
+              },
+              powder: {
+                DEFAULT: '#E0F0F2',
+                dark: '#B8DEE2',
+              },
+              sage: {
+                DEFAULT: '#D1E2D5',
+                dark: '#A5C2AC',
+              },
+              blush: {
+                DEFAULT: '#F9E4E1',
+                dark: '#E8C6C1',
+              },
+              butter: {
+                DEFAULT: '#FEF9D6',
+                dark: '#F2E8A7',
+              },
+              mocha: {
+                DEFAULT: '#A4907C', // Pantone Mocha Mousse ish
+                light: '#C5B4A5',
+              },
+              text: {
+                main: '#4A4A4A', // Softer than black
+                muted: '#858585',
+              }
+            },
+            borderRadius: {
+              'xl': '1rem',
+              '2xl': '1.5rem',
+              '3xl': '2rem',
+              '4xl': '2.5rem',
+              'pill': '9999px',
+            },
+            boxShadow: {
+              'soft': '0 10px 40px -10px rgba(0,0,0,0.05)',
+              'float': '0 20px 50px -12px rgba(164, 144, 124, 0.15)',
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'blob': 'blob 7s infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              blob: {
+                '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                '100%': { transform: 'translate(0px, 0px) scale(1)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #FDFCF8;
+        color: #4A4A4A;
+        -webkit-font-smoothing: antialiased;
+      }
+      /* Soft Scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #E3DFF2;
+        border-radius: 99px;
+        border: 2px solid #FDFCF8;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #C8C2E0;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.30.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
